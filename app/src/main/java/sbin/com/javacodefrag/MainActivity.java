@@ -3,6 +3,8 @@ package sbin.com.javacodefrag;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,6 +16,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ViewGroup fragmentContainer =
+                (ViewGroup) findViewById(R.id.detail_fragment_container);
+        mTablet = (fragmentContainer != null);
+
+        TextView tvOut = (TextView) findViewById(R.id.textOut);
+        tvOut.setText("Fragment side-by-side? "+ mTablet);
     }
 
 
