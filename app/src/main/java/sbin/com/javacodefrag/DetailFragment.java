@@ -29,6 +29,17 @@ public class DetailFragment extends Fragment {
         mListener = (FragmentListener) context;
     }
 
+    //Instead of just sending strings and int message, implement new instance to
+    //send parcelable objects (complex) ..
+    //use this web, http://www.parcelabler.com/
+    public static DetailFragment newInstance(Person person) {
+
+        Bundle args = new Bundle();
+        args.putParcelable("PERSON_KEY", person);
+        DetailFragment fragment = new DetailFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,6 +48,11 @@ public class DetailFragment extends Fragment {
         textFirstName = (EditText) rootView.findViewById(R.id.textFirstName);
         textLastName = (EditText) rootView.findViewById(R.id.textLastName);
         textAge = (EditText) rootView.findViewById(R.id.textAge);
+
+        Person person = getArguments().getParcelable("PERSON_KEY");
+        textFirstName.setText(person.getFirstName());
+        textLastName.setText(person.getLastName());
+        textAge.setText(String.valueOf(person.getAge()));
 
         Button doneButton = (Button) rootView.findViewById(R.id.done_button);
         doneButton.setOnClickListener(new View.OnClickListener() {
@@ -56,11 +72,12 @@ public class DetailFragment extends Fragment {
         String lastName = textLastName.getText().toString();
         int age = Integer.valueOf(textAge.getText().toString());
 
-        mListener.onFragmentFinish(firstName,lastName,age);
+        Person person = new Person(firstName,lastName,age);
+        mListener.onFragmentFinish(person);
     }
 
     public interface FragmentListener {
-        void onFragmentFinish(String firstName, String lastName, int age);
+        void onFragmentFinish(Person person);
     }
 
 }

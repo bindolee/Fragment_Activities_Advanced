@@ -42,10 +42,12 @@ implements DetailFragment.FragmentListener {
     }
 
     public void viewDetailFragment(){
+        Person person = new Person("First Name", "Last Name", 35);
+
         if (mTablet){
             FragmentManager fragmentManager =
                     getSupportFragmentManager();
-            DetailFragment fragment = new DetailFragment();
+            DetailFragment fragment = DetailFragment.newInstance(person);
             fragmentManager.beginTransaction()
                     .add(R.id.detail_fragment_container, fragment)
                     .commit();
@@ -58,9 +60,9 @@ implements DetailFragment.FragmentListener {
     }
 
     @Override
-    public void onFragmentFinish(String firstName, String lastName, int age) {
-        Log.i(TAG, "onFragmentFinish: " + firstName + ", "
-                + lastName + ", " + age);
+    public void onFragmentFinish(Person person) {
+        Log.i(TAG, "onFragmentFinish: " + person.getFirstName() + ", "
+                + person.getLastName() + ", " + person.getAge());
 
         DetailFragment fragment =
                 (DetailFragment) getSupportFragmentManager()
