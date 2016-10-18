@@ -45,7 +45,7 @@ implements DetailFragment.FragmentListener {
         if (mTablet){
             FragmentManager fragmentManager =
                     getSupportFragmentManager();
-            DetailActivityFragment fragment = new DetailActivityFragment();
+            DetailFragment fragment = new DetailFragment();
             fragmentManager.beginTransaction()
                     .add(R.id.detail_fragment_container, fragment)
                     .commit();
@@ -59,7 +59,19 @@ implements DetailFragment.FragmentListener {
 
     @Override
     public void onFragmentFinish(String firstName, String lastName, int age) {
-        Log.i(TAG, "onFragmentFinish" + firstName + ", "
+        Log.i(TAG, "onFragmentFinish: " + firstName + ", "
                 + lastName + ", " + age);
+
+        DetailFragment fragment =
+                (DetailFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.detail_fragment_container);
+
+        //Received the value and no need to display the message any longer
+        //So..remove the fragment message from the activity.
+        getSupportFragmentManager()
+                .beginTransaction()
+                .remove(fragment)
+                .commit();
+
     }
 }

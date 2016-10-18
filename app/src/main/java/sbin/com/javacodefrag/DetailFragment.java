@@ -1,8 +1,9 @@
 package sbin.com.javacodefrag;
 
-import android.app.Fragment;
+
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,14 @@ public class DetailFragment extends Fragment {
     }
 
     private void done() {
+        if (mListener == null) {
+            throw new AssertionError();
+        }
+        String firstName = textFirstName.getText().toString();
+        String lastName = textLastName.getText().toString();
+        int age = Integer.valueOf(textAge.getText().toString());
 
+        mListener.onFragmentFinish(firstName,lastName,age);
     }
 
     public interface FragmentListener {
