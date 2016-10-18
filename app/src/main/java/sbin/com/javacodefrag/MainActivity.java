@@ -6,14 +6,17 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+implements DetailFragment.FragmentListener {
 
     private boolean mTablet;
     private ViewGroup fragmentContainer;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ViewGroup fragmentContainer =
+        fragmentContainer =
                 (ViewGroup) findViewById(R.id.detail_fragment_container);
         mTablet = (fragmentContainer != null);
 
@@ -52,5 +55,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+    }
+
+    @Override
+    public void onFragmentFinish(String firstName, String lastName, int age) {
+        Log.i(TAG, "onFragmentFinish" + firstName + ", "
+                + lastName + ", " + age);
     }
 }
